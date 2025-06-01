@@ -1,16 +1,22 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bhawani Admin Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <h1>Welcome to Bhawani Admin Panel</h1>
-  <p>Please log in using your admin credentials.</p>
-  <script>
-    // Simulated login redirect
-    window.location.href = "/login.html";
-  </script>
+  <div id="app">
+    <h1>Welcome to Bhawani Admin Panel</h1>
+    <div class="login-container">
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="login()">Login</button>
+      <p id="message"></p>
+    </div>
+  </div>
+  <script src="js/login.js"></script>
 </body>
 </html>
