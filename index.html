@@ -1,13 +1,62 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bhawani Admin Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    #login, #dashboard { display: none; }
+  </style>
 </head>
 <body>
-  <h1>Welcome to Bhawani Admin Panel</h1>
-  <script src="assets/app.js"></script>
+  <h1>Bhawani Admin Panel</h1>
+  <div id="login">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+    <button onclick="login()">Login</button>
+    <p id="login-error" style="color:red;"></p>
+  </div>
+
+  <div id="dashboard">
+    <h2>Welcome, Admin!</h2>
+    <p>You are now logged in.</p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://hxjcqbspxipwczkwbict.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh4amNxYnNweGlwd2N6a3diaWN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2NzgwNDIsImV4cCI6MjA2NDI1NDA0Mn0.1zkRoY_pKTQScgN2RLhyDEZlUC-Te2qSZU9OVxvua8Q';
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        document.getElementById('login-error').innerText = error.message;
+      } else {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+      }
+    }
+
+    async function logout() {
+      await supabase.auth.signOut();
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('login').style.display = 'block';
+    }
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+      } else {
+        document.getElementById('login').style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>
