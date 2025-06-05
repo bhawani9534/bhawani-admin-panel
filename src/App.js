@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 
 const App = () => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-
   return (
     <Router>
       <Routes>
